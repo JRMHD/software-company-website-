@@ -69,7 +69,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('blog') ? 'active' : '' }}"
-                            href="{{ route('blog') }}">Blog</a>
+                            href="{{ url('blog') }}">Blog</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}"

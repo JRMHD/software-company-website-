@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +46,24 @@ Route::view('/service-single', 'service-single')->name('service-single');
 Route::view('/services', 'services')->name('services');
 Route::view('/terms-of-use', 'terms-of-use')->name('terms-of-use');
 Route::view('/welcome', 'welcome')->name('welcome');
+
+
+// Admin routes
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('posts', [PostController::class, 'index'])->name('admin.posts.index');
+    Route::get('posts/create', [PostController::class, 'create'])->name('admin.posts.create');
+    Route::post('posts', [PostController::class, 'store'])->name('admin.posts.store');
+    Route::get('posts/{post}/edit', [PostController::class, 'edit'])->name('admin.posts.edit');
+    Route::put('posts/{post}', [PostController::class, 'update'])->name('admin.posts.update');
+    Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('admin.posts.destroy');
+});
+
+// Public routes
+Route::get('blog', [PostController::class, 'showAll'])->name('blog.index');
+Route::get('blog/{post}', [PostController::class, 'show'])->name('blog.show');
+Route::get('/blog/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::post('/comments/{post}', [CommentController::class, 'store'])->name('comments.store');
+Route::post('blog/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::get('blog/{post}', [PostController::class, 'show'])->name('blog.show');
+
+
