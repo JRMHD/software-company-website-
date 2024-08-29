@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactFormController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,5 +66,12 @@ Route::get('/blog/{post}', [PostController::class, 'show'])->name('posts.show');
 Route::post('/comments/{post}', [CommentController::class, 'store'])->name('comments.store');
 Route::post('blog/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::get('blog/{post}', [PostController::class, 'show'])->name('blog.show');
+Route::get('/search', [PostController::class, 'search'])->name('posts.search');
 
 
+Route::get('/blog', [PostController::class, 'showAll'])->name('blog.index');
+Route::get('/blog/{id}', [PostController::class, 'show'])->name('blog.show');
+Route::get('/blog/tag/{tag}', [PostController::class, 'searchByTag'])->name('blog.tag');
+Route::get('/posts/tag/{tag}', [PostController::class, 'searchByTag'])->name('posts.searchByTag');
+
+Route::post('/contact', [ContactFormController::class, 'submit']);

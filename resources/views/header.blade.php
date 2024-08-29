@@ -57,10 +57,7 @@
                                 <a class="dropdown-item py-2 {{ request()->routeIs('login') ? 'active' : '' }}"
                                     href="{{ route('login') }}">Login page</a>
                             </li>
-                            <li>
-                                <a class="dropdown-item py-2 {{ request()->routeIs('register') ? 'active' : '' }}"
-                                    href="{{ route('register') }}">Register</a>
-                            </li>
+                            
                         </ul>
                     </li>
                     <li class="nav-item">

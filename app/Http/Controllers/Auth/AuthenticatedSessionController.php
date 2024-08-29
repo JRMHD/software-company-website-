@@ -45,4 +45,11 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+
+    protected function authenticated(Request $request, $user)
+    {
+        // Redirect users to the admin posts page after login
+        return redirect()->route('admin.posts.index');
+    }
 }

@@ -14,6 +14,10 @@ class Post extends Model
         'title',
         'body',
         'image',
+        'author', // New field
+        'link', // New field
+        'tags', // New field
+        'excerpt', // New field
         'user_id',
     ];
 
@@ -28,4 +32,5 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+    
 }

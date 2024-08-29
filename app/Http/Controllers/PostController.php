@@ -6,15 +6,18 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class PostController extends Controller
 {
     // Admin Interface
     public function index()
     {
-        $posts = Post::latest()->get();
+        // Fetch paginated posts
+        $posts = Post::paginate(10); // Adjust the number of items per page as needed
         return view('admin.posts.index', compact('posts'));
     }
+
 
     public function create()
     {
@@ -27,7 +30,11 @@ class PostController extends Controller
             $request->validate([
                 'title' => 'required|string|max:255',
                 'body' => 'required|string',
-                'image' => 'nullable|image|max:2048' // Ensure image size is reasonable
+                'image' => 'nullable|image|max:2048',
+                'author' => 'nullable|string|max:255',
+                'link' => 'nullable|url',
+                'tags' => 'nullable|string|max:255',
+                'excerpt' => 'nullable|string|max:500',
             ]);
 
             $path = $request->file('image') ? $request->file('image')->store('images/posts', 'public') : null;
@@ -36,7 +43,13 @@ class PostController extends Controller
                 'title' => $request->title,
                 'body' => $request->body,
                 'image' => $path,
-                'user_id' => Auth::id()
+                'author' => $request->author ?? 'Admin',
+                'link' => $request->link,
+                'tags' => $request->tags,
+                'excerpt' => $request->excerpt,
+                'user_id' => Auth::id(),
+                'category' => 'Technology',
+                'created_at' => Carbon::now(),
             ]);
 
             return redirect()->route('admin.posts.index')->with('success', 'Post created successfully.');
@@ -56,7 +69,11 @@ class PostController extends Controller
             $request->validate([
                 'title' => 'required|string|max:255',
                 'body' => 'required|string',
-                'image' => 'nullable|image|max:2048'
+                'image' => 'nullable|image|max:2048',
+                'author' => 'nullable|string|max:255',
+                'link' => 'nullable|url',
+                'tags' => 'nullable|string|max:255',
+                'excerpt' => 'nullable|string|max:500',
             ]);
 
             $path = $request->file('image') ? $request->file('image')->store('images/posts', 'public') : $post->image;
@@ -64,7 +81,11 @@ class PostController extends Controller
             $post->update([
                 'title' => $request->title,
                 'body' => $request->body,
-                'image' => $path
+                'image' => $path,
+                'author' => $request->author ?? 'Admin',
+                'link' => $request->link,
+                'tags' => $request->tags,
+                'excerpt' => $request->excerpt,
             ]);
 
             return redirect()->route('admin.posts.index')->with('success', 'Post updated successfully.');
@@ -73,10 +94,10 @@ class PostController extends Controller
         }
     }
 
+
     public function destroy(Post $post)
     {
         try {
-            // Optionally delete the image file if it exists
             if ($post->image && Storage::exists('public/' . $post->image)) {
                 Storage::delete('public/' . $post->image);
             }
@@ -88,19 +109,63 @@ class PostController extends Controller
         }
     }
 
-
-
-
     // Public Blog Page
-    public function showAll()
+    public function showAll(Request $request)
     {
-        $posts = Post::latest()->get();
-        return view('blog', compact('posts'));
+        $search = $request->input('search');
+        $postsQuery = Post::latest();
+
+        if ($search) {
+            $postsQuery->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('body', 'like', "%{$search}%")
+                    ->orWhere('tags', 'like', "%{$search}%");
+            });
+        }
+
+        $posts = $postsQuery->paginate(15);
+        $recentPosts = Post::latest()->take(5)->get();
+        $popularTags = Post::selectRaw('tags, COUNT(*) as count')
+            ->groupBy('tags')
+            ->orderByDesc('count')
+            ->limit(10)
+            ->get();
+
+        return view('blog', compact('posts', 'search', 'recentPosts', 'popularTags'));
     }
 
-    public function show(Post $post)
+    public function show($id)
     {
+        $post = Post::findOrFail($id);
         $comments = $post->comments()->latest()->get();
-        return view('blog-single', compact('post', 'comments'));
+        $recentPosts = Post::where('id', '!=', $id)->latest()->take(5)->get();
+        $relatedPosts = Post::where('tags', 'like', "%{$post->tags}%")
+            ->where('id', '!=', $id)
+            ->latest()
+            ->take(5)
+            ->get();
+
+        $popularTags = Post::selectRaw('tags, COUNT(*) as count')
+            ->groupBy('tags')
+            ->orderByDesc('count')
+            ->limit(10)
+            ->get();
+
+        return view('blog-single', compact('post', 'comments', 'recentPosts', 'relatedPosts', 'popularTags'));
+    }
+
+
+    // New Method to Search Posts by Tag
+    public function searchByTag($tag)
+    {
+        $posts = Post::where('tags', 'like', "%{$tag}%")->paginate(15);
+        $recentPosts = Post::latest()->take(5)->get(); // Add this line
+        $popularTags = Post::selectRaw('tags, COUNT(*) as count')
+            ->groupBy('tags')
+            ->orderByDesc('count')
+            ->limit(10)
+            ->get();
+
+        return view('blog', compact('posts', 'recentPosts', 'popularTags', 'tag'));
     }
 }

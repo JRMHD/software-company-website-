@@ -16,6 +16,10 @@ return new class extends Migration
             $table->string('title');
             $table->text('body');
             $table->string('image')->nullable();
+            $table->string('author')->nullable(); // New field
+            $table->string('link')->nullable(); // New field
+            $table->string('tags')->nullable(); // New field
+            $table->text('excerpt')->nullable(); // New field
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

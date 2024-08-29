@@ -28,4 +28,9 @@
             @endforeach
         </tbody>
     </table>
+
+    <!-- Custom Pagination -->
+    <div class="custom-pagination">
+        {{ $posts->links('pagination::custom') }}
+    </div>
 @endsection
