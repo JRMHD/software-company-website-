@@ -55,7 +55,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800&display=swap"
         rel="stylesheet" />
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css" />
 
@@ -113,7 +114,6 @@
     <!-- End Breadcrumbs -->
 
     <!-- ============== Start portfolio section ========== -->
-
     <section class="container portfolio py-5" id="portfolio">
         <div class="heading">
             <h4 class="pretitle" data-aos="fade-up">portfolio</h4>
@@ -121,144 +121,125 @@
                 our portfolio
             </h1>
         </div>
-        <ul class="filters d-flex my-4" data-aos="fade-up" data-aos-delay="150">
-            <li class="nav-item portfolio-btn active">
-                <a class="nav-link" data-filter="*">All</a>
-            </li>
-            <li class="nav-item portfolio-btn mx-lg-3 mx-1">
-                <a class="nav-link" data-filter=".mobile">Mobile</a>
-            </li>
-            <li class="nav-item portfolio-btn mx-lg-3 mx-1">
-                <a class="nav-link" data-filter=".data">Data</a>
-            </li>
-            <li class="nav-item portfolio-btn mx-lg-3 mx-1">
-                <a class="nav-link" data-filter=".web">Web</a>
-            </li>
-        </ul>
         <div class="row portfolio-row gy-4 gx-4" data-aos="fade-up" data-aos-delay="150">
-            <div class="col-md-6 col-lg-4 mx-auto mobile">
-                <div class="portfolio-item">
-                    <img src="images/portfolio/1.jpg" class="gallery-item" alt="portfolio-img" />
-                    <div class="img-overlay">
-                        <div class="content">
-                            <h3>tansiApp</h3>
-                            <h6>mobile application</h6>
+            @foreach ($projects as $project)
+                <div class="col-md-6 col-lg-4 mx-auto">
+                    <div class="portfolio-item">
+                        <div class="project-image">
+                            @if ($project->image)
+                                <div class="image-wrapper">
+                                    <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->name }}"
+                                        class="gallery-item" />
+                                    <div class="overlay">
+                                        <div class="overlay-content">
+                                            <h4 style="color: #1A56DB; font-weight: bold;">{{ $project->name }}</h4>
+                                            <p>{{ $project->type }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <div
+                                    style="width: 100%; height: 200px; background-color: #E5E7EB; display: flex; align-items: center; justify-content: center;">
+                                    <span style="color: #9CA3AF;">No Image Available</span>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">{{ $project->name }}</h3>
+                            <h6 class="project-type">{{ $project->type }}</h6>
+                            <p class="project-description">{{ Str::limit($project->description, 120) }}</p>
                             <div class="d-flex tags my-2">
-                                <span>#react</span>
-                                <span>#HTML</span>
-                                <span>#next_js</span>
-                                <span>#node</span>
+                                @foreach (explode(',', $project->languages) as $language)
+                                    <span>#{{ trim($language) }}</span>
+                                @endforeach
                             </div>
                             <div class="link">
-                                <a class="unique-text" href="portfolio-single.html">view project</a>
+                                <a class="view-project-button" href="{{ route('portfolio.show', $project) }}">view
+                                    project</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mx-auto mobile">
-                <div class="portfolio-item">
-                    <img src="images/portfolio/2.jpg" class="gallery-item" alt="portfolio-img" />
-                    <div class="img-overlay">
-                        <div class="content">
-                            <h3>tansiApp</h3>
-                            <h6>mobile application</h6>
-                            <div class="d-flex tags col-10 my-2">
-                                <span>#js</span>
-                                <span>#HTML</span>
-                                <span>#next_js</span>
-                                <span>#node</span>
-                            </div>
-                            <div class="link">
-                                <a class="unique-text" href="portfolio-single.html">view project</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mx-auto web">
-                <div class="portfolio-item">
-                    <img src="images/portfolio/3.jpg" alt="portfolio-img" />
-                    <div class="img-overlay">
-                        <div class="content">
-                            <h3>imolas</h3>
-                            <h6>mobile application</h6>
-                            <div class="d-flex tags my-2">
-                                <span>#redux</span>
-                                <span>#HTML</span>
-                                <span>#next_js</span>
-                                <span>#gsap</span>
-                            </div>
-                            <div class="link">
-                                <a class="unique-text" href="portfolio-single.html">view project</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mx-auto data web">
-                <div class="portfolio-item">
-                    <img src="images/portfolio/4.png" alt="portfolio-img" />
-                    <div class="img-overlay">
-                        <div class="content">
-                            <h3>abertonApp</h3>
-                            <h6>mobile application</h6>
-                            <div class="d-flex tags my-2">
-                                <span>#react</span>
-                                <span>#HTML</span>
-                                <span>#next_js</span>
-                                <span>#node</span>
-                            </div>
-                            <div class="link">
-                                <a class="unique-text" href="portfolio-single.html">view project</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mx-auto hosting web">
-                <div class="portfolio-item">
-                    <img src="images/portfolio/5.jpg" alt="portfolio-img" />
-                    <div class="img-overlay">
-                        <div class="content">
-                            <h3>Fitnessapp</h3>
-                            <h6>web application</h6>
-                            <div class="d-flex tags my-2">
-                                <span>#react</span>
-                                <span>#PHP</span>
-                                <span>#next_js</span>
-                                <span>#node</span>
-                            </div>
-                            <div class="link">
-                                <a class="unique-text" href="portfolio-single.html">view project</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mx-auto data">
-                <div class="portfolio-item">
-                    <img src="images/portfolio/6.jpg" alt="portfolio-img" />
-                    <div class="img-overlay">
-                        <div class="content">
-                            <h3>Spark</h3>
-                            <h6>web application</h6>
-                            <div class="d-flex tags my-2">
-                                <span>#react</span>
-                                <span>#HTML</span>
-                                <span>#ruby</span>
-                                <span>#node</span>
-                            </div>
-                            <div class="link">
-                                <a class="unique-text" href="portfolio-single.html">view project</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-4">
+            {{ $projects->links('vendor.pagination.bootstrap-5') }}
         </div>
     </section>
     <!-- ============== End portfolio section ========== -->
+
+
+    <style>
+        /* Ensure all images have the same size with rounded corners and shadows */
+        .image-wrapper {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .image-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Add a cool overlay effect */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .overlay-content {
+            text-align: center;
+        }
+
+        .image-wrapper:hover .overlay {
+            opacity: 1;
+        }
+
+        /* Custom styling for the 'view project' button */
+        .view-project-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #1E9547;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .view-project-button:hover {
+            background-color: #1A56DB;
+            transform: translateY(-2px);
+        }
+
+        /* Add subtle scale effect on hover */
+        .project-image img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+    <!-- ============== End portfolio section ========== -->
+
 
     <!-- ============== Start FAQ section ========== -->
     <section class="container faq py-5">

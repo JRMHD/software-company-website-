@@ -6,6 +6,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProjectController;
+
 
 
 /*
@@ -82,3 +84,29 @@ Route::post('/contact', [ContactController::class, 'store']);
 Route::get('/404', function () {
     abort(404);
 })->name('404');
+
+
+
+Route::get('admin/dashboard', function () {
+    return view('admin.dashboard');
+})->name('admin.dashboard');
+
+Route::get('/portfolio', [ProjectController::class, 'index'])->name('portfolio.index');
+Route::get('/portfolio/{project}', [ProjectController::class, 'show'])->name('portfolio.show');
+
+// Admin routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/projects', [ProjectController::class, 'adminIndex'])->name('admin.projects.index');
+    Route::get('/admin/projects/create', [ProjectController::class, 'create'])->name('admin.projects.create');
+    Route::post('/admin/projects', [ProjectController::class, 'store'])->name('admin.projects.store');
+    Route::get('/admin/projects/{project}/edit', [ProjectController::class, 'edit'])->name('admin.projects.edit');
+    Route::put('/admin/projects/{project}', [ProjectController::class, 'update'])->name('admin.projects.update');
+    Route::delete('/admin/projects/{project}', [ProjectController::class, 'destroy'])->name('admin.projects.destroy');
+});
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');  // Add this name
+});

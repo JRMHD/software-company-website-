@@ -29,7 +29,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('portfolio') ? 'active' : '' }}"
-                            href="{{ route('portfolio') }}">Portfolio</a>
+                            href="{{ url('portfolio') }}">Portfolio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('blog') ? 'active' : '' }}"

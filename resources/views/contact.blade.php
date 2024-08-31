@@ -114,17 +114,8 @@
     <!-- ============== Start Contact Section ========== -->
     <!-- ======= Start Contact Section ======= -->
     <section class="container contact py-5" id="contact">
-        <div class="heading">
-            <h4 class="pretitle" data-aos="fade-up">Contact Us</h4>
-            <h1 class="title col-12" data-aos="fade-up" data-aos-delay="100">
-                Reach Out to Us
-            </h1>
-            <p class="col-lg-7 col-12" data-aos="fade-up" data-aos-delay="150">
-                We are committed to providing exceptional support and service. Feel free to reach out with any questions
-                or concerns.
-            </p>
-        </div>
-        <!-- ======= Start Contact Section ======= -->
+
+
         <section class="container contact py-5" id="contact">
             <div class="heading">
                 <h4 class="pretitle" data-aos="fade-up">Contact Us</h4>

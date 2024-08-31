@@ -42,7 +42,6 @@
 </head>
 
 <body class="home-1">
-
     <!-- start preLoader -->
     <div id="preloader">
         <svg id="mainSVG" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
