@@ -124,68 +124,172 @@
                 or concerns.
             </p>
         </div>
-        <div class="row gx-4">
-            <div class="col-12 col-lg-6 gy-3">
-                <h2 class="title-2" data-aos="fade-right" data-aos-delay="200">
-                    Contact Information:
-                </h2>
-                <div class="info d-flex my-4" data-aos="fade-right" data-aos-delay="250">
-                    <h5><i class="bi bi-envelope-fill mx-4"></i>info@jrmhd.tech</h5>
-                </div>
-                <div class="info d-flex my-4" data-aos="fade-up" data-aos-delay="300">
-                    <h5><i class="bi bi-phone-fill mx-4"></i>(862) 201-3375</h5>
-                </div>
-                <div class="info d-flex my-4" data-aos="fade-up" data-aos-delay="350">
-                    <h5><i class="bi bi-geo-alt-fill mx-4"></i>New Jersey, USA</h5>
-                </div>
-                <div class="info d-flex my-4" data-aos="fade-up" data-aos-delay="400">
-                    <h5><i class="bi bi-instagram mx-4"></i>@reaganmukabana</h5>
-                </div>
-                <div class="info d-flex my-4" data-aos="fade-up" data-aos-delay="450">
-                    <h5><i class="bi bi-envelope-fill mx-4"></i>info@jrmhd.tech</h5>
-                </div>
-                <div class="info d-flex my-4" data-aos="fade-up" data-aos-delay="500">
-                    <h5><i class="bi bi-phone-fill mx-4"></i>+254 706 378 245</h5>
-                </div>
-                <div class="info d-flex my-4" data-aos="fade-up" data-aos-delay="550">
-                    <h5><i class="bi bi-geo-alt-fill mx-4"></i>Nairobi, Kenya</h5>
-                </div>
+        <!-- ======= Start Contact Section ======= -->
+        <section class="container contact py-5" id="contact">
+            <div class="heading">
+                <h4 class="pretitle" data-aos="fade-up">Contact Us</h4>
+                <h1 class="title col-12" data-aos="fade-up" data-aos-delay="100">
+                    Reach Out to Us
+                </h1>
+                <p class="col-lg-7 col-12" data-aos="fade-up" data-aos-delay="150">
+                    We are committed to providing exceptional support and service. Feel free to reach out with any
+                    questions
+                    or concerns.
+                </p>
             </div>
-            <div class="col-12 col-lg-6">
-                <form class="main-form" id="contact-us-form">
-                    <div class="col-12">
-                        <div class="row g-3 mb-1">
-                            <div class="col-lg-6 col-12" data-aos="fade-right" data-aos-delay="200">
-                                <input placeholder="Name" type="text" id="name" name="name"
-                                    class="text-input" required />
-                            </div>
-                            <div class="col-lg-6 col-12" data-aos="fade-left" data-aos-delay="200">
-                                <input placeholder="Subject" type="text" id="subject" name="subject"
-                                    class="text-input" required />
+            <div class="row gx-4">
+                <!-- Contact Information (Left Column) -->
+                <div class="col-12 col-lg-6 gy-3">
+                    <h2 class="title-2" data-aos="fade-right" data-aos-delay="200">
+                        Contact Information:
+                    </h2>
+                    <div class="info d-flex my-4" data-aos="fade-right" data-aos-delay="250">
+                        <h5><i class="bi bi-envelope-fill mx-4"></i>info@jrmhd.tech</h5>
+                    </div>
+                    <div id="phone-info" class="info d-flex my-4" data-aos="fade-up" data-aos-delay="300">
+                        <h5><i class="bi bi-phone-fill mx-4"></i><span id="phone-number"></span></h5>
+                    </div>
+                    <div id="location-info" class="info d-flex my-4" data-aos="fade-up" data-aos-delay="350">
+                        <h5><i class="bi bi-geo-alt-fill mx-4"></i><span id="location"></span></h5>
+                    </div>
+                    <script>
+                        // Function to update contact information based on location
+                        function updateContactInfo(isInAfrica) {
+                            const phoneElement = document.querySelector('.info h5 i.bi-phone-fill').nextSibling;
+                            const locationElement = document.querySelector('.info h5 i.bi-geo-alt-fill').nextSibling;
+                            const mapIframe = document.querySelector('.contact-map');
+
+                            if (isInAfrica) {
+                                phoneElement.textContent = '+254 706 378 245';
+                                locationElement.textContent = 'Nairobi, Kenya';
+                                mapIframe.src =
+                                    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255281.19891733082!2d36.7073083274628!3d-1.3032025906305107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1172d84d49a7%3A0xf7cf0254b297924c!2sNairobi%2C%20Kenya!5e0!3m2!1sen!2sus!4v1630504614926!5m2!1sen!2sus';
+                            } else {
+                                phoneElement.textContent = '(862) 201-3375';
+                                locationElement.textContent = 'New Jersey, USA';
+                                mapIframe.src =
+                                    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.1583091352!2d-74.11976373946234!3d40.69766374874431!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25090129c363d%3A0x40c6a5770d25022b!2sJersey%20City%2C%20NJ!5e0!3m2!1sen!2sus!4v1630504673688!5m2!1sen!2sus';
+                            }
+                        }
+
+                        // Function to get user's location and update contact info
+                        function getUserLocationAndUpdateInfo() {
+                            fetch('https://ipapi.co/json/')
+                                .then(response => response.json())
+                                .then(data => {
+                                    const isInAfrica = data.continent_code === 'AF';
+                                    updateContactInfo(isInAfrica);
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching location:', error);
+                                    updateContactInfo(false); // Default to non-Africa if there's an error
+                                });
+                        }
+
+                        // Call the function when the DOM is fully loaded
+                        document.addEventListener('DOMContentLoaded', getUserLocationAndUpdateInfo);
+                    </script>
+                </div>
+
+                <!-- Contact Form (Right Column) -->
+                <div class="col-12 col-lg-6">
+                    <h2>Contact Us</h2>
+                    <form class="main-form" id="contact-us-form">
+                        <div class="col-12">
+                            <div class="row g-3 mb-1">
+                                <div class="col-lg-6 col-12" data-aos="fade-right" data-aos-delay="200">
+                                    <input placeholder="Name" type="text" id="name" name="name"
+                                        class="text-input" required />
+                                </div>
+                                <div class="col-lg-6 col-12" data-aos="fade-left" data-aos-delay="200">
+                                    <input placeholder="Subject" type="text" id="subject" name="subject"
+                                        class="text-input" required />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12" data-aos="fade-up" data-aos-delay="250">
-                        <input placeholder="Email" type="email" id="email" name="email"
-                            class="text-input my-2" required />
-                    </div>
-                    <div class="col-12" data-aos="fade-up" data-aos-delay="300">
-                        <input placeholder="Phone Number" type="tel" id="phone" name="phone"
-                            class="text-input my-2" required />
-                    </div>
-                    <div class="col-12" data-aos="fade-up" data-aos-delay="350">
-                        <textarea placeholder="Message" class="text-input my-2" rows="7" cols="30" id="message"
-                            name="message" required></textarea>
-                    </div>
-                    <div class="col-12" data-aos="fade-up" data-aos-delay="400">
-                        <button type="submit" value="Submit" class="btn">Send Now</button>
-                    </div>
-                </form>
+                        <div class="col-12" data-aos="fade-up" data-aos-delay="250">
+                            <input placeholder="Email" type="email" id="email" name="email"
+                                class="text-input my-2" required />
+                        </div>
+                        <div class="col-12" data-aos="fade-up" data-aos-delay="300">
+                            <input placeholder="Phone Number" type="tel" id="phone" name="phone"
+                                class="text-input my-2" required />
+                        </div>
+                        <div class="col-12" data-aos="fade-up" data-aos-delay="350">
+                            <textarea placeholder="Message" class="text-input my-2" rows="7" cols="30" id="message"
+                                name="message" required></textarea>
+                        </div>
+                        <div class="col-12" data-aos="fade-up" data-aos-delay="400">
+                            <button type="submit" class="btn">Send Now</button>
+                        </div>
+                    </form>
+                    <div id="form-message" style="display: none;"></div>
+                </div>
             </div>
-        </div>
-        <iframe class="contact-map" data-aos="fade-up" data-aos-delay="450"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2482.9050207912896!2d-0.14675028449633118!3d51.514958479636384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761ad554c335c1%3A0xda2164b934c67c1a!2sOxford+St%2C+London%2C+UK!5e0!3m2!1sen!2sro!4v1485889312335"
-            allowfullscreen=""></iframe>
+
+
+            <iframe id="contact-map" class="contact-map" data-aos="fade-up" data-aos-delay="450" src=""
+                allowfullscreen=""></iframe>
+
+        </section><!-- End Contact Section -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.getElementById('contact-us-form');
+                if (form) {
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+
+                        const formData = new FormData(form);
+                        const submitButton = form.querySelector('button[type="submit"]');
+                        const formMessage = document.getElementById('form-message');
+
+                        // Show loading spinner
+                        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                        submitButton.disabled = true;
+                        formMessage.style.display = 'none';
+
+                        axios.post('/contact', formData)
+                            .then(response => {
+                                // Show success message
+                                submitButton.innerHTML = '<i class="fas fa-check"></i> Success!';
+                                submitButton.classList.add('btn-success');
+                                formMessage.innerHTML = 'Your message has been sent successfully!';
+                                formMessage.classList.add('alert-success');
+                                formMessage.style.display = 'block';
+                                form.reset();
+                            })
+                            .catch(error => {
+                                // Show error message
+                                submitButton.innerHTML = '<i class="fas fa-times"></i> Error';
+                                submitButton.classList.add('btn-danger');
+                                if (error.response) {
+                                    formMessage.innerHTML =
+                                        `Error: ${error.response.data.message || 'An unexpected error occurred.'}`;
+                                } else if (error.request) {
+                                    formMessage.innerHTML =
+                                        'Error: No response received from the server. Please try again later.';
+                                } else {
+                                    formMessage.innerHTML = `Error: ${error.message}`;
+                                }
+                                formMessage.classList.add('alert-danger');
+                                formMessage.style.display = 'block';
+                                console.error('Error:', error);
+                            })
+                            .finally(() => {
+                                setTimeout(() => {
+                                    submitButton.innerHTML = 'Send Now';
+                                    submitButton.disabled = false;
+                                    submitButton.classList.remove('btn-success', 'btn-danger');
+                                }, 3000);
+                            });
+                    });
+                } else {
+                    console.error('Contact form not found');
+                }
+            });
+        </script>
+
     </section><!-- End Contact Section -->
 
     <!-- ============== End Contact Section ========== -->

@@ -38,7 +38,7 @@
 
     <!-- main css file -->
     <link rel="stylesheet" href="css/style.css">
-    <title> techida | IT Solutions & Business Services HTML template </title>
+    <title>page not found </title>
 </head>
 
 <body class="home-1">

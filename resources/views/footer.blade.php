@@ -12,13 +12,13 @@
                     </p>
                     <h4 class="my-2">Follow Us</h4>
                     <div class="social d-flex gap-2">
-                        <a href="https://facebook.com/jrmhdtech" target="_blank" class="icon"><i
+                        <a href="https://www.facebook.com/JRMHDD/" target="_blank" class="icon"><i
                                 class="bi bi-facebook"></i></a>
-                        <a href="https://instagram.com/jrmhdtech" target="_blank" class="icon"><i
+                        <a href="https://www.instagram.com/reaganmukabana/" target="_blank" class="icon"><i
                                 class="bi bi-instagram"></i></a>
                         <a href="https://twitter.com/reaganmukabana" target="_blank" class="icon"><i
                                 class="bi bi-twitter"></i></a>
-                        <a href="https://youtube.com/jrmhdtech" target="_blank" class="icon"><i
+                        <a href="https://x.com/reaganmukabana/" target="_blank" class="icon"><i
                                 class="bi bi-youtube"></i></a>
                     </div>
                 </div>

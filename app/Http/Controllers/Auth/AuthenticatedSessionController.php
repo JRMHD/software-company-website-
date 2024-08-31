@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return $this->authenticated($request, Auth::user());
     }
 
     /**
@@ -46,8 +46,10 @@ class AuthenticatedSessionController extends Controller
         return redirect('/');
     }
 
-
-    protected function authenticated(Request $request, $user)
+    /**
+     * Handle post-authentication redirection.
+     */
+    protected function authenticated(Request $request, $user): RedirectResponse
     {
         // Redirect users to the admin posts page after login
         return redirect()->route('admin.posts.index');

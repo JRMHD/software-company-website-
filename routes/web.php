@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactFormController;
+use App\Http\Controllers\ContactController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -74,4 +76,9 @@ Route::get('/blog/{id}', [PostController::class, 'show'])->name('blog.show');
 Route::get('/blog/tag/{tag}', [PostController::class, 'searchByTag'])->name('blog.tag');
 Route::get('/posts/tag/{tag}', [PostController::class, 'searchByTag'])->name('posts.searchByTag');
 
-Route::post('/contact', [ContactFormController::class, 'submit']);
+Route::post('/contact', [ContactController::class, 'store']);
+
+
+Route::get('/404', function () {
+    abort(404);
+})->name('404');

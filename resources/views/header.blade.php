@@ -23,42 +23,9 @@
                         <a class="nav-link {{ request()->routeIs('services') ? 'active' : '' }}"
                             href="{{ route('services') }}">Services</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Pages
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                            <li>
-                                <a class="dropdown-item py-2 {{ request()->routeIs('404') ? 'active' : '' }}"
-                                    href="{{ route('404') }}">404 page</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item py-2 {{ request()->routeIs('blog-single') ? 'active' : '' }}"
-                                    href="{{ route('blog-single') }}">Single blog page</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item py-2 {{ request()->routeIs('service-single') ? 'active' : '' }}"
-                                    href="{{ route('service-single') }}">Service single</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item py-2 {{ request()->routeIs('portfolio-single') ? 'active' : '' }}"
-                                    href="{{ route('portfolio-single') }}">Portfolio single</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item py-2 {{ request()->routeIs('privacy-policy') ? 'active' : '' }}"
-                                    href="{{ route('privacy-policy') }}">Privacy policy</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item py-2 {{ request()->routeIs('terms-of-use') ? 'active' : '' }}"
-                                    href="{{ route('terms-of-use') }}">Terms of use</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item py-2 {{ request()->routeIs('login') ? 'active' : '' }}"
-                                    href="{{ route('login') }}">Login page</a>
-                            </li>
-                            
-                        </ul>
+                    <li>
+                        <a class="dropdown-item py-2 {{ request()->routeIs('login') ? 'active' : '' }}"
+                            href="{{ route('login') }}">Login page</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('portfolio') ? 'active' : '' }}"
