@@ -13,11 +13,10 @@ class PostController extends Controller
     // Admin Interface
     public function index()
     {
-        // Fetch paginated posts
-        $posts = Post::paginate(10); // Adjust the number of items per page as needed
+
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.posts.index', compact('posts'));
     }
-
 
     public function create()
     {
