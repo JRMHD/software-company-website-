@@ -110,3 +110,4 @@ Route::middleware(['auth'])->group(function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');  // Add this name
 });
+Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');

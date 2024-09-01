@@ -43,6 +43,7 @@ class CommentController extends Controller
         // Validate the incoming request data
         $request->validate([
             'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
             'comment' => 'required|string|max:1000',
         ]);
 
@@ -53,13 +54,14 @@ class CommentController extends Controller
         Comment::create([
             'post_id' => $post->id,
             'name' => $request->name,
-            'email' => 'required|email|max:255',
+            'email' => $request->email,
             'comment' => $request->comment,
         ]);
 
         // Redirect back with a success message
         return redirect()->route('blog.show', $post->id)->with('success', 'Comment added successfully!');
     }
+
 
     /**
      * Display the specified comment.
@@ -69,9 +71,10 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        // Fetch a specific comment by ID
-        $comment = Comment::findOrFail($id);
-        return view('comments.show', compact('comment'));
+        $post = Post::with('comments')->findOrFail($id);
+        $relatedPosts = Post::where('id', '!=', $post->id)->take(3)->get();
+        $recentPosts = Post::latest()->take(5)->get();
+        return view('blog.show', compact('post', 'relatedPosts', 'recentPosts'));
     }
 
     /**
@@ -88,7 +91,7 @@ class CommentController extends Controller
     }
 
 
-    
+
     /**
      * Update the specified comment in storage.
      *
